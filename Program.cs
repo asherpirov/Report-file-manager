@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-namespace System.IO;
+namespace ReportAnalyzer;
 
 enum ReportTypes {Collect, Analyze, Recon, Intel}
 enum ValidStatuses {Pending, Approved, Rejected}
@@ -78,16 +78,16 @@ class Project
 
             validRecords++;
             
-            UnitName.Append(Unit);
-            ReportType.Append(type);
-            Priority.Append(priority);
-            Score.Append(score);
-            Status.Append(status);
-            n++;
+
+            UnitName[validRecords] = Unit;
+            ReportType[validRecords] = type;
+            Priority[validRecords] = priority;
+            Score[validRecords] = score;
+            Status[validRecords] = status;
 
 
         }
-        Console.WriteLine($"Stored {n} valid records for analysis.");
+        Console.WriteLine($"Stored {validRecords} valid records for analysis.");
         return $"Processing complete\nValid records: {validRecords}\nInvalid records:{invalidRecords}";
 
     }
