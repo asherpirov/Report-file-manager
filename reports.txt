@@ -18,10 +18,10 @@ Oscar,Recon,5,99.8,Approved
 Papa,Intel,1,42.1,Rejected
 Quebec,Collect,3,76.5,Approved
 Romeo,Analyze,4,85.7,Approved
-Sierra,Collect,2,88.5,Approved
-Tango ,intel,3,77.2,Approved
+  Sierra,Collect,2,88.5,Approved
+Tango  ,intel,3,77.2,Approved
 Uniform,RECON,5,91.0,Pending
 Victor,analyze,4,82.3,Approved
-Whiskey,Collect,3, 75.5 ,Approved
+Whiskey,Collect,3,  75.5  ,Approved
 Yankee,Intel,3,100.0,Approved
 Zulu,Recon,1,0.0,Rejected
