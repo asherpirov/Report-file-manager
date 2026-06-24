@@ -31,13 +31,16 @@ class Project
         }
     }
 
-    static string ProcessReports(string[] UnitName, ReportTypes[] ReportType, int[] Priority, double[] Score, ValidStatuses[] Status)
+    static string ProcessReports(string[] UnitName, ReportTypes[] ReportType, int[] Priority, double[] Score, ValidStatuses[] Status, ref int validRecords, ref int invalidRecords)
     {
         string[]? lines = LoadFile("reports.txt");
         string result = "";
-        int invalidRecords = 0;
-        int validRecords = 0;
-        int n = 0;
+       
+
+        if (lines == null)
+        {
+            return "Processing failed: Could not load data file.";
+        }
 
         for (int i = 0; i < lines.Length; i++)
         {
@@ -76,15 +79,13 @@ class Project
                 continue;
             }
 
-            validRecords++;
-            
-
             UnitName[validRecords] = Unit;
             ReportType[validRecords] = type;
             Priority[validRecords] = priority;
             Score[validRecords] = score;
             Status[validRecords] = status;
 
+            validRecords++;
 
         }
         Console.WriteLine($"Stored {validRecords} valid records for analysis.");
@@ -158,6 +159,21 @@ class Project
         return false;
     }
 
+    static double? CalculateAverage(double[] Score, int validRecords)
+    {
+        if (validRecords == 0)
+        {
+            return null;
+        }
+
+        double sum = 0;
+
+        for (int i = 0; i < validRecords; i++)
+        {
+            sum += Score[i];
+        }   
+        return sum / validRecords;
+    }
 
 
 
@@ -166,6 +182,8 @@ class Project
     {
         const int MAX_REPROTS = 100;
 
+        int validRecords = 0;
+        int invalidRecords = 0;
         string[] UnitName = new string[MAX_REPROTS];
         ReportTypes[] ReportType = new ReportTypes[MAX_REPROTS];
         int[] Priority = new int[MAX_REPROTS];
@@ -173,9 +191,12 @@ class Project
         ValidStatuses[] Status = new ValidStatuses[MAX_REPROTS];
 
 
-        Console.WriteLine(ProcessReports(UnitName, ReportType, Priority, Score, Status));
+        Console.WriteLine(ProcessReports(UnitName, ReportType, Priority, Score, Status, ref validRecords, ref invalidRecords));
+        double? average = CalculateAverage(Score, validRecords);
+        Console.WriteLine($"Average Score: {average:F2}");
 
-      
+
+
 
         //foreach (string line in (LoadFile("reports.txt")))
         //{
