@@ -6,11 +6,11 @@ enum ReportType {Collect, Analyze, Recon, Intel}
 enum ValidStatuses {Pending, Approved, Rejected}
 class Project
 {
-    static string[]? LoadFile(string fileName)
+    static string[]? LoadFile(string filePath)
     {
-        if (File.Exists(fileName))
+        if (File.Exists(filePath))
         {
-            string[]? lines = File.ReadAllLines(fileName);
+            string[]? lines = File.ReadAllLines(filePath);
 
             if (lines.Length == 0)
             {
@@ -26,14 +26,14 @@ class Project
         }
         else
         {
-            Console.WriteLine($"Error: File '{fileName}' not found");
+            Console.WriteLine($"Error: Filepath '{filePath}' not found");
             return null;
         }
     }
 
-    static string ProcessReports(string[] UnitName, ReportType[] ReportType, int[] Priority, double[] Score, ValidStatuses[] Status, ref int validRecords, ref int invalidRecords)
+    static string ProcessReports(string[] UnitName, ReportType[] ReportType, int[] Priority, double[] Score, ValidStatuses[] Status, ref int validRecords, ref int invalidRecords, string filePath)
     {
-        string[]? lines = LoadFile("reports.txt");       
+        string[]? lines = LoadFile(filePath);       
 
         if (lines == null)
         {
@@ -418,7 +418,6 @@ class Project
 
     }
 
-
     static void Main()
     {
         const int MAX_REPROTS = 100;
@@ -432,8 +431,9 @@ class Project
         double[] Scores = new double[MAX_REPROTS];
         ValidStatuses[] Statuses = new ValidStatuses[MAX_REPROTS];
 
+        string filePath = @"C:\Users\אשר ויהודית פירוב\Desktop\Report-file-manager\Report-file-manager-project\reports.txt";
 
-        ProcessReports(UnitName, ReportTypes, Priority, Scores, Statuses, ref validRecords, ref invalidRecords);
+        ProcessReports(UnitName, ReportTypes, Priority, Scores, Statuses, ref validRecords, ref invalidRecords, filePath);
         Console.WriteLine();
         DisplayBasicStatistics(Scores, validRecords);
         Console.WriteLine();
