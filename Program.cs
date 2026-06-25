@@ -176,6 +176,74 @@ class Project
     }
 
 
+    static double? FindMaxScore(double[] Score)
+    {
+        if (Score.Length == 0)
+        {
+            return null;
+        }
+
+        double maxScore = 0;
+
+        foreach (double score in Score)
+        {
+            if (score > maxScore)
+            {
+                maxScore = score;
+            }
+        }
+        return maxScore;
+    }
+
+    static double? FindMinScore(double[] Score)
+    {
+        if (Score.Length == 0)
+        {
+            return null;
+        }
+        double minScore = 100.0;
+        foreach (double score in Score)
+        {
+            if (score < minScore)
+            {
+                minScore = score;
+            }
+        }
+        return minScore;
+    }
+
+
+    static int CountByStatus(ValidStatuses[] Statuses, ValidStatuses status, int validRecords )
+    {
+        int count = 0;
+
+        for (int i = 0; i < validRecords; i++)
+        {
+            if (Statuses[i] == status)
+            {
+                count++;
+            }
+
+        }
+        return count;
+    }
+
+
+    static int CountByType(ReportTypes[] ReportTypes, ReportTypes type, int validRecords)
+    {
+        int count = 0;
+
+        for (int i = 0; i < validRecords; i++)
+        {
+            if (ReportTypes[i] == type)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+
 
 
     static void Main()
@@ -185,16 +253,25 @@ class Project
         int validRecords = 0;
         int invalidRecords = 0;
         string[] UnitName = new string[MAX_REPROTS];
-        ReportTypes[] ReportType = new ReportTypes[MAX_REPROTS];
+        ReportTypes[] ReportTypes = new ReportTypes[MAX_REPROTS];
         int[] Priority = new int[MAX_REPROTS];
         double[] Score = new double[MAX_REPROTS];
-        ValidStatuses[] Status = new ValidStatuses[MAX_REPROTS];
+        ValidStatuses[] Statuses = new ValidStatuses[MAX_REPROTS];
 
 
-        Console.WriteLine(ProcessReports(UnitName, ReportType, Priority, Score, Status, ref validRecords, ref invalidRecords));
+        Console.WriteLine(ProcessReports(UnitName, ReportType, Priority, Score, Statuses, ref validRecords, ref invalidRecords));
         double? average = CalculateAverage(Score, validRecords);
         Console.WriteLine($"Average Score: {average:F2}");
-
+        double? maxScore = FindMaxScore(Score);
+        Console.WriteLine($"The max score is {maxScore}");
+        double? minScore = FindMinScore(Score);
+        Console.WriteLine($"The min score is {minScore}");
+        int ConutPending = CountByStatus(Statuses, ValidStatuses.Pending, validRecords);
+        Console.WriteLine($"Pending:{ConutPending}");
+        int ConutRejected = CountByStatus(Statuses, ValidStatuses.Rejected, validRecords);
+        Console.WriteLine($"Rejected:{ConutRejected}");
+        int ConutApproved = CountByStatus(Statuses, ValidStatuses.Approved, validRecords);
+        Console.WriteLine($"Approved:{ConutApproved}");
 
 
 
