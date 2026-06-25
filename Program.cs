@@ -31,14 +31,8 @@ class Project
         }
     }
 
-    static string ProcessReports(string[] UnitName, ReportType[] ReportType, int[] Priority, double[] Score, ValidStatuses[] Status, ref int validRecords, ref int invalidRecords, string filePath)
+    static string ProcessReports(string[]? lines, string[] UnitName, ReportType[] ReportType, int[] Priority, double[] Score, ValidStatuses[] Status, ref int validRecords, ref int invalidRecords, string filePath)
     {
-        string[]? lines = LoadFile(filePath);       
-
-        if (lines == null)
-        {
-            return "Processing failed: Could not load data file.";
-        }
 
         for (int i = 0; i < lines.Length; i++)
         {
@@ -431,9 +425,18 @@ class Project
         double[] Scores = new double[MAX_REPROTS];
         ValidStatuses[] Statuses = new ValidStatuses[MAX_REPROTS];
 
+
         string filePath = @"C:\Users\אשר ויהודית פירוב\Desktop\Report-file-manager\Report-file-manager-project\reports.txt";
 
-        ProcessReports(UnitName, ReportTypes, Priority, Scores, Statuses, ref validRecords, ref invalidRecords, filePath);
+        string[]? lines = LoadFile(filePath);
+
+        if (lines == null)
+        {
+            Console.WriteLine("Processing failed: Could not load data file.");
+            return;
+        }
+
+        ProcessReports(lines,UnitName, ReportTypes, Priority, Scores, Statuses, ref validRecords, ref invalidRecords, filePath);
         Console.WriteLine();
         DisplayBasicStatistics(Scores, validRecords);
         Console.WriteLine();
