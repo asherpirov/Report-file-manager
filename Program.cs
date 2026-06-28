@@ -31,7 +31,7 @@ class Project
         }
     }
 
-    static string ProcessReports(string[]? lines, string[] UnitName, ReportType[] ReportType, int[] Priority, double[] Score, ValidStatuses[] Status, ref int validRecords, ref int invalidRecords, string filePath)
+    static string ProcessReports(string[] lines, string[] UnitName, ReportType[] ReportType, int[] Priority, double[] Score, ValidStatuses[] Status, ref int validRecords, ref int invalidRecords)
     {
 
         for (int i = 0; i < lines.Length; i++)
@@ -436,7 +436,7 @@ class Project
             return;
         }
 
-        ProcessReports(lines,UnitName, ReportTypes, Priority, Scores, Statuses, ref validRecords, ref invalidRecords, filePath);
+        ProcessReports(lines,UnitName, ReportTypes, Priority, Scores, Statuses, ref validRecords, ref invalidRecords);
         Console.WriteLine();
         DisplayBasicStatistics(Scores, validRecords);
         Console.WriteLine();
